@@ -1,0 +1,536 @@
+/* ------ LAYOUT COMPONENTS --------- */
+#page {
+    margin-top: 10px;
+    background-color: white;
+    border: solid gray 1px;
+}
+
+#header {
+    background-image: url('text_smaller.jpg');
+    background-position: top left;
+    padding-left: 0px;
+    height: 130px;
+}
+
+#logo {
+    margin-right: 20px;
+    margin-top: 2px;
+    margin-left: 2px;
+
+    -moz-box-shadow: 2px 2px 2px #000;
+    -webkit-box-shadow: 2px 2px 2px #000;
+    box-shadow: 2px 2px 2px #000;
+}
+
+#name-and-slogan {
+    margin-top: 20px;
+    color: white;
+    -moz-text-shadow: 2px 2px 2px #000;
+    -webkit-text-shadow: 2px 2px 2px #000;
+    text-shadow: 2px 2px 2px #000;
+}
+
+#site-slogan {
+    margin-top: 5px;
+
+}
+
+
+#site-name a {
+    color: white;
+    font-size: 122%;
+}
+
+#secondary-menu a {
+    color: white;
+}
+
+#main-menu {
+    padding-right: 5px;
+    padding-left: 5px;
+
+    margin-left: -10px;
+    margin-right: -10px;
+    /*
+    background-color: #FFF0D1;
+    */
+    border-bottom: solid 1px lightgray;
+
+
+}
+
+#main-menu ul.links li {
+    display: inline-block;
+    margin: 0px;
+
+    padding-left: 0px;
+    padding-right: 5px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    width: auto;
+}
+
+#main-menu li a {
+
+    display: block;
+
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
+
+    margin-top: 5px;
+    margin-bottom: 12px;
+    margin-right: 0px;
+    margin-left: 0px;
+
+    -moz-box-shadow: 2px 2px 2px #000;
+    -webkit-box-shadow: 2px 2px 2px #000;
+    box-shadow: 2px 2px 2px #000;
+
+    border: solid gray 1px;
+
+    background-image: url('background_tile.png');
+    color: white;
+    text-decoration: none;
+}
+
+#main-menu li a:hover {
+    background-image: url('background_tile_lighter.png');
+}
+
+#main-menu li a:active {
+
+    margin-top: 7px;
+    margin-bottom: -2px;
+    margin-left: 2px;
+    margin-right: -2px;
+
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+
+
+
+}
+
+#content {
+    margin-top: 20px;
+}
+
+/* Hiding the edit tabs on the entry page */
+.node-type-sub-entry .tabs-primary,
+.node-type-entry .tabs-primary {
+
+    display: none;
+
+}
+
+.submitted {
+    display: none;
+    padding-top: 10px;
+    border-top: 1px gray solid;
+    clear: both;
+}
+
+/* ------ MINOR COMPONENTS --------- */
+
+#wallich-next-prev-entry {
+    float: right;
+    margin-top: 24px;
+}
+
+#search-block-form {
+    float: right;
+    margin-top: -35px;
+    padding-left: 500px;
+    text-align: right;
+}
+
+.wallich-entry .field {
+    float: left;
+    clear: left;
+}
+
+.wallich-entry {
+    clear: both;
+    border-top: solid gray 1px;
+    padding-top: 5px;
+    padding-left: 5px;
+    margin-top: 10px;
+    background-color: #dddddd;
+    overflow: hidden;
+    /* remarkably make the thing stretch to cover contents */
+}
+
+.wallich-entry-sub-details,
+.wallich-entry-details {
+    float: left;
+    width: 39%;
+    padding-bottom: 10px;
+}
+
+.wallich-subentries {
+    clear: both;
+}
+
+.wallich-entry-fragment {
+    float: right;
+    width: 60%;
+}
+
+.wallich-entry-sub {
+    clear: both;
+    height: 150px;
+    border-top: solid gray 1px;
+    padding-top: 5px;
+}
+
+.wallich-specimens-wrapper {
+    /* position:relative; */
+    clear: both;
+    width: 99%;
+    display: none;
+    border: solid gray 1px;
+    /* border-radius: 0.3em; */
+    margin-bottom: 1em;
+    box-shadow: 2px 2px 2px #000;
+}
+
+.wallich-specimens-wrapper-entry {}
+
+.wallich-specimens {
+    width: 100%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    background-color: white;
+}
+
+.wallich-specimens th {
+    text-align: left;
+    /*    background-image: url('../images/background_tile.png'); */
+    background-color: black;
+    color: #dddddd;
+    font-weight: normal;
+    padding: 0.3em;
+    border-bottom: solid 1px black;
+}
+
+.wallich-specimens td {
+    padding: 0.3em;
+}
+
+.wallich-specimens tr.wallich-specimen-even {
+    background-color: #eeeeee;
+}
+
+a.wallich-specimens-switch {
+
+    box-shadow: 1px 1px 1px #000;
+    border: solid gray 1px;
+    border-radius: 0.3em;
+
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+
+    /* background-image: url('../images/background_tile.png'); */
+    background-color: #dddddd;
+    /* #f7ebdf */
+    ;
+    color: black;
+    text-decoration: none;
+}
+
+.wallich-specimens-switch-hide {
+    display: none;
+}
+
+a.wallich-specimens-switch:hover {
+    border: solid red 1px;
+    border: solid black 1px;
+}
+
+a.wallich-specimens-switch:active {
+    margin-bottom: -2px;
+    margin-right: -2px;
+    box-shadow: none;
+}
+
+/*
+.wallich-entry-sub.wallich-editorial-status-null{
+    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0), rgba(0,0,0,0), rgba(0,0,0,0));
+}
+.wallich-entry-sub.wallich-editorial-status-fixme{
+    background: linear-gradient(rgba(122, 28, 28, 0.3), rgba(122, 28, 28, 0), rgba(122, 28, 28, 0), rgba(122, 28, 28, 0));
+}
+.wallich-entry-sub.wallich-editorial-status-incomplete{
+    background: linear-gradient(rgba(28, 48, 94, 0.3), rgba(28, 48, 94, 0), rgba(28, 48, 94, 0), rgba(28, 48, 94, 0));
+}
+.wallich-entry-sub.wallich-editorial-status-complete{
+    background: linear-gradient(rgba(28, 94, 39, 0.3), rgba(28, 94, 39, 0), rgba(28, 94, 39, 0),rgba(28, 94, 39, 0));
+}
+
+.wallich-entry.wallich-editorial-status-null{
+    background-color: rgba(0,0,0,0.3);
+}
+
+.wallich-entry.wallich-editorial-status-fixme{
+    background-color: rgba(122, 28, 28, 0.3);
+}
+.wallich-entry.wallich-editorial-status-incomplete{
+    background-color: rgba(28, 48, 94, 0.3);
+}
+.wallich-entry.wallich-editorial-status-complete{
+    background-color: rgba(28, 94, 39, 0.3);
+}
+*/
+
+
+.wallich-entry-sub,
+.wallich-entry-fragment h3 {
+    margin-top: 0px;
+}
+
+.wallich-verbatim {
+    font-family: courier;
+    border: solid gray 1px;
+    padding: 5px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    background: #FFF0D1;
+}
+
+.wallich-verbatim p {
+    margin: 0px;
+}
+
+.wallich-entity-field {
+    margin-top: 0.5em;
+}
+
+.wallich-entity-field strong.wallich-entity-field-title {
+    display: block;
+    float: left;
+    text-align: right;
+    width: 20%;
+    padding-right: 0.5em;
+
+}
+
+.wallich-entity-field span.wallich-edit-link {
+    float: right;
+}
+
+.wallich_page_image_wrapper {
+    margin-top: 1em;
+}
+
+.wallich_page_image {
+    position: relative;
+    float: left;
+    margin-left: 0px;
+}
+
+/* the fragments on the page image */
+.wallich_page_image a {
+    display: block;
+    position: absolute;
+    border: solid rgba(255, 255, 255, 0) 1px;
+    width: 1em;
+    height: 1.5em;
+    color: rgba(255, 255, 255, 0);
+    text-align: center;
+    margin-top: -0.5em;
+    text-decoration: none;
+}
+
+.wallich_page_image a.wallich_page_image_fragment_offset {
+    margin-top: 1.5em;
+}
+
+.wallich_page_image a:hover {
+    background-color: rgba(255, 255, 255, 0);
+    color: rgba(0, 0, 0, 0);
+    border: solid rgba(0, 0, 0, 0) 1px;
+}
+
+#wallich_page_jump {
+    width: 150px;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    margin-bottom: 0.6em;
+}
+
+.wallich_page_nav {
+    float: left;
+    margin-left: 10px;
+}
+
+.wallich_page_next_prev {
+    position: relative;
+}
+
+.wallich_page_nav .wallich_page_number {
+    position: absolute;
+    top: 15px;
+    left: 5px;
+    font-size: 200%;
+    color: white;
+}
+
+.wallich_fields {
+    overflow: visible;
+}
+
+#edit-misc-fields {
+    clear: both;
+}
+
+.wallich_pop_trigger {
+    position: relative;
+    margin-right: 1em;
+}
+
+.wallich_pop_trigger:after {
+    content: "i";
+    display: inline-block;
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.4);
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+
+
+    border-radius: 10px;
+    /*
+    border: solid gray 1px;
+    */
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.50);
+
+    text-align: center;
+    vertical-align: middle;
+    font-family: times;
+    font-style: italic;
+    margin-top: -0.2em;
+    margin-left: -0em;
+}
+
+.wallich_pop_box {
+    position: absolute;
+    top: -5em;
+    left: 1em;
+    display: none;
+    border: solid gray 1px;
+    padding: 0.3em;
+    width: 20em;
+    height: 4em;
+    background-color: rgba(255, 255, 255, 0.9);
+    text-align: left;
+    z-index: 500;
+    overflow: auto;
+}
+
+.wallich_pop_box p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+/* footer has copyright in it */
+#footer {
+    margin-top: 1em;
+    border-top: solid 1px lightgray;
+    text-align: left;
+    font-size: 90%;
+}
+
+#footer img {
+    vertical-align: middle;
+}
+
+.wallich_fields {
+    position: relative;
+    overflow: auto;
+    clear: both;
+    padding-top: 0px;
+}
+
+.wallich_fields div.form-wrapper {
+    float: left;
+    width: 28%;
+    margin-left: 4%;
+}
+
+.wallich_fields.wallich_note_fields div.form-wrapper {
+    float: left;
+    width: 42%;
+    margin-left: 4%;
+
+}
+
+.wallich_fields.wallich_note_fields {
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+.wallich_fields .description {
+    display: none;
+}
+
+#edit-field-notes {
+    float: right;
+    margin-right: 47px;
+    width: 45%;
+}
+
+.wallich_fields textarea.form-textarea {
+    height: 80px;
+}
+
+.wallich_fields div.grippie {
+    display: none;
+}
+
+#entry-node-form img,
+#sub-entry-node-form img {
+    margin-top: 15px;
+    margin-left: 47px;
+}
+
+#edit-field-editorial-status {
+    padding-right: 1em;
+    margin-top: 3px;
+    width: 29em;
+    float: right;
+}
+
+#edit-field-editorial-status-und div {
+    float: right;
+}
+
+#edit-field-editorial-status-und div label {
+    float: left;
+    padding-right: 0.3em;
+}
+
+.form-item-field-editorial-status-und label {
+    float: left;
+}
+
+#edit-actions .form-submit {
+    float: right;
+}
+
+#edit-actions {
+    margin-right: 47px;
+    margin-bottom: 3em;
+    overflow: auto;
+    clear: both;
+}
+
+#edit-misc-fields {
+    margin-left: 47px;
+    margin-right: 47px;
+    margin-bottom: 10px;
+}
