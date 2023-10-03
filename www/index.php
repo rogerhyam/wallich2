@@ -21,11 +21,9 @@
     @import url("style/responsive.css");
     @import url("style/wallich.css");
     </style>
-    <script src="http://wallich.rbge.info/sites/wallich.rbge.info/themes/wallich_theme/js/script.js?q54qeu"></script>
-    <script src="http://wallich.rbge.info/sites/wallich.rbge.info/themes/wallich_theme/js/jquery.proximity.js?q54qeu">
-    </script>
-    <script src="http://wallich.rbge.info/sites/wallich.rbge.info/themes/wallich_theme/js/specimen_popup.js?q54qeu">
-    </script>
+    <script src="js/main.js"></script>
+
+
 </head>
 
 <body class="html front not-logged-in no-sidebars page-node page-node- page-node-61201 node-type-page">

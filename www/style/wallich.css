@@ -340,10 +340,12 @@ a.wallich-specimens-switch:active {
     border: solid rgba(255, 255, 255, 0) 1px;
     width: 1em;
     height: 1.5em;
-    color: rgba(255, 255, 255, 0);
+    color: rgba(255, 255, 255, 1);
     text-align: center;
     margin-top: -0.5em;
     text-decoration: none;
+    padding-left: 0.25em;
+    padding-right: 0.25em;
 }
 
 .wallich_page_image a.wallich_page_image_fragment_offset {
@@ -351,9 +353,8 @@ a.wallich-specimens-switch:active {
 }
 
 .wallich_page_image a:hover {
-    background-color: rgba(255, 255, 255, 0);
-    color: rgba(0, 0, 0, 0);
-    border: solid rgba(0, 0, 0, 0) 1px;
+    border: solid rgba(255, 255, 255, 1) 1px;
+    background-color: #200;
 }
 
 #wallich_page_jump {
@@ -370,6 +371,11 @@ a.wallich-specimens-switch:active {
 
 .wallich_page_next_prev {
     position: relative;
+}
+
+.wallich_page_next_prev img {
+    width: 150px;
+    filter: grayscale(1);
 }
 
 .wallich_page_nav .wallich_page_number {
