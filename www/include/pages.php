@@ -84,7 +84,8 @@
                     if($link_text_em > 2) $link_text_em = floor($link_text_em * 0.8);
 
                     echo "<a ";
-                    echo 'href="index.php?section=entries&sub_entry=false&id=' . $entry['drupal_nid'] .'" '; // fixme different for entry or sub entry?
+                    // for an entry the id is the entry number.
+                    echo 'href="index.php?section=entries&sub_entry=false&id=' . $entry['entry_number'] .'" '; // fixme different for entry or sub entry?
                     echo 'title="' . strip_tags( $entry['verbatim'] ) . '" ';
                     echo 'style="top:' . $entry['page_y'] . '%; left:' . $entry['page_x'] . '%; width: ' . $link_text_em . 'em; margin-left: -0.33em" />' ;
                     echo $link_text;
@@ -109,6 +110,7 @@
                     }
 
                     echo "<a ";
+                    // for a subentry the id is the nid of the sub_entry
                     echo 'href="index.php?section=entries&sub_entry=true&id=' . $sub_entry['drupal_nid'] .'" '; // fixme different for entry or sub entry?
                     echo 'title="' . strip_tags( $sub_entry['verbatim'] ) . '" ';
                     echo 'style="top:' . $top . '%; left:' . $left . '%; width: ' . $link_text_em . 'em; margin-left: -0.33em" />' ;
