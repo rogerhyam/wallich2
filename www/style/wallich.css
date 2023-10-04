@@ -190,7 +190,7 @@
     /* position:relative; */
     clear: both;
     width: 99%;
-    display: none;
+    display: block;
     border: solid gray 1px;
     /* border-radius: 0.3em; */
     margin-bottom: 1em;
@@ -202,17 +202,21 @@
 .wallich-specimens {
     width: 100%;
     margin-top: 0px;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
     background-color: white;
+    border-left: solid gray 1px;
+    border-right: solid gray 1px;
+    border-bottom: solid gray 1px;
 }
 
 .wallich-specimens th {
     text-align: left;
     /*    background-image: url('../images/background_tile.png'); */
-    background-color: black;
-    color: #dddddd;
-    font-weight: normal;
+    background-color: white;
+    color: black;
+    font-weight: bold;
     padding: 0.3em;
+    border-top: solid 1px black;
     border-bottom: solid 1px black;
 }
 
@@ -445,7 +449,7 @@ a.wallich-specimens-switch:active {
 
 /* footer has copyright in it */
 #footer {
-    margin-top: 1em;
+    margin-top: 5em;
     border-top: solid 1px lightgray;
     text-align: left;
     font-size: 90%;

@@ -44,6 +44,7 @@
         WHERE e.entry_number = $entry_number
         order by `order` ;");
     $sub_entries = $response->fetch_all(MYSQLI_ASSOC);
+    $response->close();
 
 ?>
 <!-- FIXME NEXT PREVIOUS -->
@@ -57,7 +58,7 @@
     <!-- entry -->
     <div class="wallich-entry wallich-editorial-status-complete">
         <div class="wallich-entry-fragment">
-            <img typeof="foaf:Image" src="files/<?php echo $entry['filename'] ?>" alt="Page fragment" />
+            <img src="files/<?php echo $entry['filename'] ?>" alt="Page fragment" />
         </div>
         <div class="wallich-entry-details">
             <div class="wallich-entity-field">
@@ -66,143 +67,186 @@
             </div>
             <div class="wallich-entity-field">
                 <strong class="wallich-entity-field-title">Page:</strong>
-                <span><a href="index.php?section=pages&id=<?php echo $entry['page_node_id'] ?>"
-                        class="referenced-node-link"><?php echo $entry['page_number'] ?></a></span>
+                <span><a
+                        href="index.php?section=pages&id=<?php echo $entry['page_node_id'] ?>"><?php echo $entry['page_number'] ?></a></span>
             </div>
             <div class="wallich-verbatim">
-                <p>Lomaria ? limonifolia, Wall.</p>
+                <p><?php echo $entry['verbatim'] ?></p>
             </div>
 
             <div class="wallich-entity-field">
                 <strong class="wallich-entity-field-title">Taxon:</strong>
-                <span>Lomaria limonifolia</span>
+                <span><?php echo $entry['taxon_name'] ?></span>
             </div>
 
             <div class="wallich-entity-field">
                 <strong class="wallich-entity-field-title">Authority:</strong>
-                <span>Wall.</span>
+                <span><?php echo $entry['author_name'] ?></span>
             </div>
 
             <div class="wallich-entity-field">
                 <strong class="wallich-entity-field-title">IPNI:</strong>
-                <span class="wallich_pop_trigger" data-ipni="17139630-1">17139630-1<div class="wallich_pop_box"
-                        style="height:5em; top:-6em;">Loading ...</div></span>
+                <a href="https://www.ipni.org/n/<?php echo $entry['ipni_id'] ?>"
+                    target="ipni"><?php echo $entry['ipni_id'] ?></a>
             </div>
-
-
 
             <div class="wallich-entity-field">
-                <strong class="wallich-entity-field-title">Specimens:</strong>
-                <span>0</span>
+                <strong class="wallich-entity-field-title">Notes:</strong>
+                <span><?php echo $entry['notes'] ?></span>
             </div>
-
         </div>
 
-        <div class="wallich-specimens-wrapper wallich-specimens-wrapper-entry" id="wallich-specimens-10530">
-            <table class="wallich-specimens">
-                <tr>
-                    <th class="wallich-specimens-header">Herbarium</th>
-                    <th class="wallich-specimens-header">Specimen Barcode</th>
-                    <th class="wallich-specimens-header">Stable URI</th>
-                </tr>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
-
+        <?php render_specimens($entry['drupal_nid']); ?>
 
     </div>
 
     <!-- subentries -->
 
     <div class="wallich-subentries">
-        <div class="wallich-entry-sub wallich-editorial-status-complete"><a name="sub_entry_61223"></a>
+
+        <?php
+        foreach ($sub_entries as $sub_entry) {
+
+            // need to fetch the page number if it is different
+            if($sub_entry['page_nid'] == $entry['page_node_id']){
+                $page_number = $entry['page_number'];
+            }else{
+                $response = $mysqli->query("SELECT page_number FROM pages WHERE nid = {$sub_entry['page_nid']};");
+                $sub_entry_pages = $response->fetch_all(MYSQLI_ASSOC);
+                $response->close();
+                $page_number = $sub_entry_pages[0]['page_number'];
+            }
+    ?>
+
+        <div class="wallich-entry-sub wallich-editorial-status-complete">
+
             <div class="wallich-entry-fragment">
-                <img typeof="foaf:Image"
-                    src="http://wallich.rbge.info/sites/wallich.rbge.info/files/styles/wide_fragment/public/catalogue_page_fragments_34?itok=oidPNhZn"
-                    alt="" />
+                <img src="files/<?php echo $sub_entry['filename'] ?>" alt="Page fragment" />
             </div>
 
-
-
             <div class="wallich-entry-sub-details">
-
-
                 <div class="wallich-entity-field">
                     <strong class="wallich-entity-field-title">Collection:</strong>
-                    <span>35.[1]: Lomaria limonifolia Wall.</span>
+                    <span><?php echo $sub_entry['title'] ?></span>
                 </div>
-
-
                 <div class="wallich-entity-field">
                     <strong class="wallich-entity-field-title">Page:</strong>
-                    <span><a href="/node/1033">2</a></span>
+                    <span><a
+                            href="index.php?section=pages&id=<?php echo $sub_entry['page_nid'] ?>"><?php echo $page_number ?></a></span>
                 </div>
-
-                <div class="wallich-verbatim">Singapore 1822 (frond. sterilaes)</div>
+                <div class="wallich-verbatim"><?php echo $sub_entry['verbatim'] ?></div>
+                <?php
+                    // fetch the location
+                    $response = $mysqli->query("SELECT * FROM gazetteer WHERE tid = {$sub_entry['location_tid']};");
+                    $locations = $response->fetch_all(MYSQLI_ASSOC);
+                    $location = $locations[0];
+                    $response->close();    
+                ?>
 
                 <div class="wallich-entity-field">
                     <strong class="wallich-entity-field-title">Location:</strong>
-                    <span class="wallich_pop_trigger">Singapore<div class="wallich_pop_box"
-                            style="height:3em; top: -5em;">
-                            <p>Singapore (Republic of Singapore)</p>
-                        </div></span>
+                    <span class="wallich_pop_trigger"
+                        onmouseenter="popUpDescription(this)"><?php echo $location['name'] ?>
+                        <div onmouseleave="popDownDescription(this)" class="wallich_pop_box"
+                            style="height:8em; top: -5em;">
+                            <p><strong>Location: </strong><?php echo $location['description'] ?></p>
+                        </div>
+                    </span>
                 </div>
 
-
+                <?php
+                if($sub_entry['collector_tid']){
+                    // fetch the collector
+                    $response = $mysqli->query("SELECT * FROM collectors WHERE tid = {$sub_entry['collector_tid']};");
+                    $collectors = $response->fetch_all(MYSQLI_ASSOC);
+                    $collector = $collectors[0];
+                    $response->close();    
+                ?>
 
                 <div class="wallich-entity-field">
                     <strong class="wallich-entity-field-title">Collector:</strong>
-                    <span class="wallich_pop_trigger">Wallich, N.<div class="wallich_pop_box"
-                            style="height:10em; top: -12em;">
-                            <p>Nathaniel <strong>Wallich </strong>(1786-1854)</p>
-                            <p>Superintendent at the EIC&#39;s Botanic Garden at Sibpur, near Calcutta, India.</p>
+                    <span class="wallich_pop_trigger"
+                        onmouseenter="popUpDescription(this)"><?php echo $collector['name'] ?><div
+                            onmouseleave="popDownDescription(this)" class="wallich_pop_box"
+                            style="height:10em; top: -3em;">
+                            <p><strong>Collector: </strong><?php echo $collector['description'] ?></p>
                         </div></span>
                 </div>
+                <?php } // collector check ?>
 
+                <?php if($sub_entry['year']){ ?>
                 <div class="wallich-entity-field">
                     <strong class="wallich-entity-field-title">Year:</strong>
-                    <span>1822</span>
+                    <span><?php echo $sub_entry['year']?></span>
                 </div>
+                <?php } // end year check ?>
+            </div>
 
+            <?php render_specimens($sub_entry['drupal_nid']); ?>
 
+            <?php
+            } // end foreach subentry
+            ?>
 
-                <div class="wallich-entity-field">
-                    <strong class="wallich-entity-field-title">Specimens:</strong>
-                    <span>1 <a href="#"
-                            class="wallich-specimens-switch wallich-specimens-switch-61223 wallich-specimens-switch-show"
-                            data-nid="61223">Show &#9660;</a> <a href="#"
-                            class="wallich-specimens-switch wallich-specimens-switch-61223 wallich-specimens-switch-hide"
-                            data-nid="61223">Hide &#9650;</a></span>
-                </div>
+        </div><!-- end entry details -->
+    </div><!-- sub entries -->
 
-            </div><!-- end entry details -->
-
-        </div>
-        <div class="wallich-specimens-wrapper" id="wallich-specimens-61223">
-            <table class="wallich-specimens">
-                <tr>
-                    <th class="wallich-specimens-header">Herbarium</th>
-                    <th class="wallich-specimens-header">Specimen Barcode</th>
-                    <th class="wallich-specimens-header">Stable URI</th>
-                </tr>
-                <tbody>
-                    <tr class="wallich-specimen wallich-specimen-odd ">
-                        <td class="wallich-specimen-cell wallich-specimen-catalogue-herbarium">
-                            Royal Botanic Garden Kew (Wallich)(K-W)
-                        </td>
-                        <td class="wallich-specimen-cell wallich-specimen-catalogue-number">
-
-                            K001109072
-                        </td>
-                        <td>
-                            <a class="wallich-specimen-cell wallich-specimen-stable-uri cetaf-specimen-link" href="http://specimens.kew.org/herbarium/K001109072
-">http://specimens.kew.org/herbarium/K001109072
-                        </td>
-                    </tr>
-
-                </tbody>
-            </table>
-        </div>
-    </div>
 </article>
+
+<?php
+function render_specimens($entity_id){
+
+    global $mysqli;
+
+    // fetch the specimens
+    $response = $mysqli->query("SELECT * FROM specimens WHERE sub_entry_tid = $entity_id;");
+    $specimens = $response->fetch_all(MYSQLI_ASSOC);
+    $response->close();    
+    if(count($specimens) == 0) return "<!-- no specimens -->";
+
+?>
+<div
+    style="clear:both;  background-color: white; margin-left: -5px; margin-bottom: 5px; padding-left: 1.5em; padding-right: 1.5em;">
+    <table class="wallich-specimens">
+        <tbody>
+            <tr>
+                <th class="wallich-specimens-header">Associated Specimen</th>
+                <th class="wallich-specimens-header">Herbarium</th>
+                <th class="wallich-specimens-header">Stable URI</th>
+            </tr>
+            <?php
+    foreach ($specimens as $specimen) {
+
+        switch (substr($specimen['barcode'], 0, 1)) {
+            case 'E':
+                $stable_uri = "https://data.rbge.org.uk/herb/" . $specimen['barcode'];
+                $target = "Edinburgh";
+                break;
+            case 'K':
+                $stable_uri = "http://specimens.kew.org/herbarium/" . $specimen['barcode'];
+                $target = "Kew";
+                break;
+            case 'B':
+                $stable_uri = "http://herbarium.bgbm.org/object/" . $specimen['barcode'];
+                $target = "Berlin";
+                break;
+            default:
+                # code...
+                break;
+        }
+
+        echo "<tr>";
+        echo "<td>{$specimen['barcode']}</td>";
+        echo "<td>{$specimen['herbarium_name']}</td>";
+        echo "<td><a target=\"$target\" href=\"$stable_uri\">{$stable_uri}</a></td>";
+        echo "</tr>";
+    }
+?>
+
+        </tbody>
+    </table>
+
+</div>
+<?php
+}
+?>
