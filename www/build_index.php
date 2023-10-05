@@ -12,7 +12,7 @@ $mysqli->query("CREATE TABLE `search` (
 		   `body` text,
 		   PRIMARY KEY (`id`),
 		   FULLTEXT KEY `search` (`body`)
-		 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;");
+		 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci");
 
   
 $response = $mysqli->query("SELECT * FROM entries ORDER BY entry_number ASC;");
