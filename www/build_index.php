@@ -64,6 +64,8 @@ foreach ($entries as $entry) {
 function save_sub($sub_rows){
 
     global $mysqli;
+
+    if(!$sub_rows) return;
     
     echo "\t{$sub_rows[0]['entry_number_qualifier']}\n";
 
