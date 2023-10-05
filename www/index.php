@@ -7,9 +7,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="Generator" content="Drupal 7 (http://drupal.org)" />
-    <link rel="canonical" href="/node/61201" />
-    <link rel="shortlink" href="/node/61201" />
-    <link rel="shortcut icon" href="logo.png" type="image/png" />
+    <link rel="shortcut icon" href="/icon.png" type="image/png" />
     <title>Home | The Wallich Catalogue</title>
     <meta name="MobileOptimized" content="width">
     <meta name="HandheldFriendly" content="true">
@@ -93,6 +91,9 @@
                         case 'feedback':
                             require_once('include/feedback.php');
                             break;
+                        case 'search':
+                            require_once('include/search.php');
+                            break;
                         default:
                             require_once('include/home.php');
                             break;
@@ -115,6 +116,9 @@
                                 Pages</a></li>
                         <li class="menu-314"><a href="/index.php?section=entries"
                                 title="All the logical entries and subentries in the catalogue">Catalogue Entries</a>
+                        </li>
+                        <li class="menu-314"><a href="/index.php?section=search"
+                                title="Search the entries and sub-entries">Search</a>
                         </li>
                         <li class="menu-646 last"><a href="index.php?section=feedback"
                                 title="Feedback on the website and data">Feedback</a></li>

@@ -69,18 +69,6 @@
 <article class="node-1032 node node-catalogue-page node-promoted view-mode-full clearfix" about="/node/1032"
     typeof="sioc:Item foaf:Document">
 
-    <header>
-        <span property="dc:title" content="Page 001" class="rdf-meta element-hidden"></span><span
-            property="sioc:num_replies" content="0" datatype="xsd:integer" class="rdf-meta element-hidden"></span>
-        <p class="submitted">
-            <span property="dc:date dc:created" content="2013-08-05T17:18:00+01:00" datatype="xsd:dateTime"
-                rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" about="/user/1"
-                    typeof="sioc:UserAccount" property="foaf:name" datatype="">admin</span> on <time pubdate
-                    datetime="2013-08-05T17:18:00+01:00">Mon, 08/05/2013 - 17:18</time></span>
-        </p>
-
-    </header>
-
     <div class="wallich_page_image_wrapper">
         <div class="wallich_page_image"
             style="width: <?php echo $page_display_width ?>px; height: <?php echo $page_display_height ?>px; background-size: contain; background-repeat: no-repeat; background-image:url( '<?php echo $image_url ?>' )">

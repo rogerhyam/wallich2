@@ -16,10 +16,7 @@
     }
     
     // fail disgracefully.
-    if(!$entry_number){
-        echo "No entry nid found;";
-        exit;
-    }
+    if(!$entry_number) $entry_number = 1;
 
     // Lets actually load the entry
     $response = $mysqli->query("SELECT e.*, i.filename, p.page_number 
