@@ -5,14 +5,14 @@ require_once('../config.php');
 $mysqli->query("DROP TABLE IF EXISTS `search`;");
 
 $mysqli->query("CREATE TABLE `search` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `nid` int DEFAULT NULL,
-  `kind` varchar(10) DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `body` text,
-  PRIMARY KEY (`id`),
-  FULLTEXT KEY `search` (`body`)
-) ENGINE=InnoDB AUTO_INCREMENT=1;");
+		   `id` int NOT NULL AUTO_INCREMENT,
+		   `nid` int DEFAULT NULL,
+		   `kind` varchar(10) DEFAULT NULL,
+		   `title` varchar(255) DEFAULT NULL,
+		   `body` text,
+		   PRIMARY KEY (`id`),
+		   FULLTEXT KEY `search` (`body`)
+		 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;");
 
   
 $response = $mysqli->query("SELECT * FROM entries ORDER BY entry_number ASC;");
