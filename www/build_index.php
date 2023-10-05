@@ -36,7 +36,8 @@ foreach ($entries as $entry) {
     $txt = strip_tags($txt);
     $txt = $mysqli->real_escape_string($txt);
 
-    $sql = "INSERT INTO search (nid, kind, title, body) VALUES ({$entry['entry_number']}, 'entry' ,'{$entry['title']}', '$txt' );";
+    $safe_title = $mysqli->real_escape_string($entry['title']);
+    $sql = "INSERT INTO search (nid, kind, title, body) VALUES ({$entry['entry_number']}, 'entry' ,'$safe_title', '$txt' );";
 
     $mysqli->query($sql);
 
@@ -121,7 +122,8 @@ function save_sub($sub_rows){
     $txt = strip_tags($txt);
     $txt = $mysqli->real_escape_string($txt);
 
-    $sql = "INSERT INTO search (nid, kind, title, body) VALUES ({$sub_rows[0]['drupal_nid']}, 'sub_entry' ,'{$sub_rows[0]['title']}', '$txt' );";
+    $safe_title = $mysqli->real_escape_string($sub_rows[0]['title']);
+    $sql = "INSERT INTO search (nid, kind, title, body) VALUES ({$sub_rows[0]['drupal_nid']}, 'sub_entry' ,'$safe_title', '$txt' );";
 
     $mysqli->query($sql);
 
