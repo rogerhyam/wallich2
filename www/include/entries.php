@@ -6,7 +6,7 @@
         $response = $mysqli->query("SELECT entry_number FROM sub_entries WHERE drupal_nid = $safe_nid;");
         $sub_entries = $response->fetch_all(MYSQLI_ASSOC);
         $response->close();
-        if(count($sub_entries) != 1){
+        if(count($sub_entries) < 1){
             echo "Failed to pull sub entry from db.";
             exit;
         }
@@ -46,10 +46,57 @@
     $sub_entries = $response->fetch_all(MYSQLI_ASSOC);
     $response->close();
 
+    // we need to normalize out the locations and collector tids
+    // the subentries will be repeating otherwise.
+    $normals = array();
+    foreach ($sub_entries as $sub) {
+
+        if(!isset($normals[$sub['drupal_nid']])){
+            // if we don't have it already we add it
+            $new_sub = $sub;
+            $new_sub['location_tid'] = $sub['location_tid'] ? array($sub['location_tid']) : array();
+            $new_sub['collector_tid'] = $sub['collector_tid'] ? array($sub['collector_tid']) : array();
+            $normals[$sub['drupal_nid']] = $new_sub;
+        }else{
+            // we have it so we add the new values
+            $normals[$sub['drupal_nid']]['location_tid'][] = $sub['location_tid'];
+            $normals[$sub['drupal_nid']]['location_tid'] = array_unique($normals[$sub['drupal_nid']]['location_tid']);
+            $normals[$sub['drupal_nid']]['collector_tid'][] = $sub['collector_tid'];
+            $normals[$sub['drupal_nid']]['collector_tid'] = array_unique($normals[$sub['drupal_nid']]['collector_tid']);
+        }
+        
+    }
+    $sub_entries = array_values($normals);
+
+
 ?>
-<!-- FIXME NEXT PREVIOUS -->
-<div id="wallich-next-prev-entry"><a href="/node/10529" title="34: Lomaria secunda Wall.">&lt; Previous</a> <a
-        href="/node/10531" title="36: Lomaria scandens Willd.">Next &gt;</a></div>
+<div id="wallich-next-prev-entry">
+    <?php
+
+    // select the entries
+    $response = $mysqli->query("SELECT * FROM entries WHERE entry_number < $entry_number ORDER BY entry_number DESC LIMIT 1;");
+    $prevs = $response->fetch_all(MYSQLI_ASSOC);
+    $response->close();
+    if(count($prevs) == 1){
+        echo "<a href=\"index.php?section=entries&id={$prevs[0]['entry_number']}\" >&lt; Previous</a>&nbsp;";
+    }
+
+    // select the entries
+    $response = $mysqli->query("SELECT * FROM entries WHERE entry_number > $entry_number ORDER BY entry_number ASC LIMIT 1;");
+    $nexts = $response->fetch_all(MYSQLI_ASSOC);
+    $response->close();
+    if(count($nexts) == 1){
+        echo "<a href=\"index.php?section=entries&id={$nexts[0]['entry_number']}\" >Next &gt;</a>&nbsp;";
+    }
+
+/*
+    if($entry_number < 9148){
+        $next = $entry_number +1 ;
+        echo "<a href=\"index.php?section=pages&number=$next\" >Next &gt;</a>";
+    }
+*/
+?>
+</div>
 
 <a id="main-content"></a>
 <h1 class="page__title title" id="page-title">
@@ -137,42 +184,61 @@
                 <div class="wallich-verbatim"><?php echo $sub_entry['verbatim'] ?></div>
                 <?php
                     // fetch the location
-                    $response = $mysqli->query("SELECT * FROM gazetteer WHERE tid = {$sub_entry['location_tid']};");
-                    $locations = $response->fetch_all(MYSQLI_ASSOC);
-                    $location = $locations[0];
-                    $response->close();    
+                    if(count($sub_entry['location_tid']) > 0 ){
+                        $sql = "SELECT * FROM gazetteer WHERE tid in (". implode(',' , $sub_entry['location_tid'])  .");";
+                        $response = $mysqli->query($sql);
+                        if($mysqli->error){
+                            echo $mysqli->error;
+                            echo $sql;
+                        }
+
+                        $locations = $response->fetch_all(MYSQLI_ASSOC);
+                        $response->close();
+
+                        echo '<div class="wallich-entity-field">';
+                        echo '<strong class="wallich-entity-field-title">Location:</strong>';
+                        $first = true;
+                        foreach ($locations as $location) {
+                            if(!$first) echo ' - ';
+                            $first = false;
+                            echo '<span class="wallich_pop_trigger" onmouseenter="popUpDescription(this)">';
+                            echo $location['name'];
+                            echo '<div onmouseleave="popDownDescription(this)" onclick="popDownDescription(this)" class="wallich_pop_box" style="height:8em; top: -5em;"><p><strong>Location: </strong>';
+                            echo $location['description'];
+                            echo '</div>';
+                            echo '</span>';
+                        }
+                        echo '</div>';
+
+                    } // check for locations
+
+                    // do the collectors too
+                    if($sub_entry['collector_tid']){
+
+                        // fetch the collectors
+                        $response = $mysqli->query("SELECT * FROM collectors WHERE tid in  (". implode(',', $sub_entry['collector_tid'])  .");");
+                        $collectors = $response->fetch_all(MYSQLI_ASSOC);
+                        $response->close();    
+
+                        echo '<div class="wallich-entity-field">';
+                        echo '<strong class="wallich-entity-field-title">Collector:</strong>';
+                        $first = true;
+                        foreach($collectors as $collector){
+
+                            if(!$first) echo ' - ';
+                            $first = false;
+                            
+                            echo '<span class="wallich_pop_trigger" onmouseenter="popUpDescription(this)">';
+                            echo $collector['name'];
+                            echo '<div onmouseleave="popDownDescription(this)" onclick="popDownDescription(this)" class="wallich_pop_box" style="height:10em; top: -3em;"><p><strong>Collector: </strong>';
+                            echo $collector['description'];
+                            echo '</div>';
+                            echo '</span>';
+                        }
+                        echo '</div>';
+
+                    } // collector check
                 ?>
-
-                <div class="wallich-entity-field">
-                    <strong class="wallich-entity-field-title">Location:</strong>
-                    <span class="wallich_pop_trigger"
-                        onmouseenter="popUpDescription(this)"><?php echo $location['name'] ?>
-                        <div onmouseleave="popDownDescription(this)" class="wallich_pop_box"
-                            style="height:8em; top: -5em;">
-                            <p><strong>Location: </strong><?php echo $location['description'] ?></p>
-                        </div>
-                    </span>
-                </div>
-
-                <?php
-                if($sub_entry['collector_tid']){
-                    // fetch the collector
-                    $response = $mysqli->query("SELECT * FROM collectors WHERE tid = {$sub_entry['collector_tid']};");
-                    $collectors = $response->fetch_all(MYSQLI_ASSOC);
-                    $collector = $collectors[0];
-                    $response->close();    
-                ?>
-
-                <div class="wallich-entity-field">
-                    <strong class="wallich-entity-field-title">Collector:</strong>
-                    <span class="wallich_pop_trigger"
-                        onmouseenter="popUpDescription(this)"><?php echo $collector['name'] ?><div
-                            onmouseleave="popDownDescription(this)" class="wallich_pop_box"
-                            style="height:10em; top: -3em;">
-                            <p><strong>Collector: </strong><?php echo $collector['description'] ?></p>
-                        </div></span>
-                </div>
-                <?php } // collector check ?>
 
                 <?php if($sub_entry['year']){ ?>
                 <div class="wallich-entity-field">
@@ -205,8 +271,7 @@ function render_specimens($entity_id){
     if(count($specimens) == 0) return "<!-- no specimens -->";
 
 ?>
-<div
-    style="clear:both;  background-color: white; margin-left: -5px; margin-bottom: 5px; padding-left: 1.5em; padding-right: 1.5em;">
+<div style=" background-color: none; margin-left: -5px; margin-bottom: 5px; ">
     <table class="wallich-specimens">
         <tbody>
             <tr>

@@ -48,10 +48,8 @@
 
 
             <div class="header__region region region-header">
+                <!--
                 <div id="block-search-form" class="block block-search first last odd" role="search">
-
-
-                    <!-- search box -->
                     <form action="/" method="post" id="search-block-form" accept-charset="UTF-8">
                         <div>
                             <div class="container-inline">
@@ -71,13 +69,13 @@
                         </div>
                     </form>
                 </div>
+-->
             </div>
 
         </header>
 
         <div id="main">
-            <div id="content" class="column" role="main">
-
+            <div id="content" style="position:relative; width: 100%" role="main">
                 <?php
                     switch (@$_GET['section']) {
                         case 'about':
@@ -127,7 +125,7 @@
 
 
         </div>
-
+        <div style="clear: both; height: 5em;">&nbsp;</div>
         <footer id="footer" class="region region-footer">
             <div id="block-block-2" class="block block-block first last odd">
 

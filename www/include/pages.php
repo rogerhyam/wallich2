@@ -1,8 +1,19 @@
 <?php
-
     // which page are we looking at
-    $page_id = @$_GET['id'];
-    if(!$page_id) $page_id = 1032; // fixme
+
+    // so we can look by page number we catch that
+    if(@$_GET['number']){
+        $page_number_safe = $mysqli->real_escape_string($_GET['number']);
+        $response = $mysqli->query("SELECT nid FROM pages WHERE page_number = $page_number_safe");
+        $rows = $response->fetch_all(MYSQLI_ASSOC);
+        $response->close();
+        if(isset($rows[0])) $page_id = $rows[0]['nid'];
+        else $page_id = false;
+    }else{
+      $page_id = @$_GET['id'];
+    }
+    
+    if(!$page_id) $page_id = 1032;
 
     // mysql to get the page
     $page_id_safe = $mysqli->real_escape_string($page_id);
