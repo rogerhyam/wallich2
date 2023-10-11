@@ -46,34 +46,23 @@
 
 
             <div class="header__region region region-header">
-                <!--
-                <div id="block-search-form" class="block block-search first last odd" role="search">
-                    <form action="/" method="post" id="search-block-form" accept-charset="UTF-8">
-                        <div>
-                            <div class="container-inline">
-                                <h2 class="element-invisible">Search form</h2>
-                                <div class="form-item form-type-textfield form-item-search-block-form">
-                                    <label class="element-invisible" for="edit-search-block-form--2">Search </label>
-                                    <input title="Enter the terms you wish to search for." type="text"
-                                        id="edit-search-block-form--2" name="search_block_form" value="" size="15"
-                                        maxlength="128" class="form-text" />
-                                </div>
-                                <div class="form-actions form-wrapper" id="edit-actions"><input type="submit"
-                                        id="edit-submit" name="op" value="Search" class="form-submit" /></div><input
-                                    type="hidden" name="form_build_id"
-                                    value="form-fiB-3dJt-tHQSPnN7LFWnRx-Qo23VGgGFb_ipaqDy1Q" />
-                                <input type="hidden" name="form_id" value="search_block_form" />
-                            </div>
-                        </div>
-                    </form>
-                </div>
--->
             </div>
 
         </header>
 
         <div id="main">
             <div id="content" style="position:relative; width: 100%" role="main">
+                <div id="overlay" style="display:none;">
+                    <div id="overlay_box">
+                        <p style="float: right; margin-top: -.8em; "><span
+                                style="text-decoration: none; font-weight: bold; cursor: pointer;" href="#"
+                                onclick="popDownDescription(this)">X</span></p>
+                        <div id="overlay_content">Place holder</div>
+                        <p style="float: right; margin-top: -.8em;"><span
+                                style="text-decoration: underline; font-weight: bold; cursor: pointer;"
+                                onclick="popDownDescription(this)">close</span>
+                    </div>
+                </div>
                 <?php
                     switch (@$_GET['section']) {
                         case 'about':

@@ -40,7 +40,7 @@
                                 style="float:right; height:282px; margin-left:10px; margin-right:10px; width:205px"
                                 class="file-default media-element" title="Sangeeta Rajbhandary using the EIC Herbarium"
                                 typeof="foaf:Image"
-                                src="http://wallich.rbge.info/sites/wallich.rbge.info/files/Sangeeta%20Rajbhandari%20using%20the%20EIC%20Herbarium.jpg" />
+                                src="style/Sangeeta%20Rajbhandari%20using%20the%20EIC%20Herbarium.jpg" />
                         </div>
 
 

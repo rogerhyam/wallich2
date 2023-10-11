@@ -1,6 +1,22 @@
 /* ------ LAYOUT COMPONENTS --------- */
+#overlay {
+    margin: 0;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#overlay_box {
+    border: solid 4px gray;
+    background-color: white;
+    margin: 20%;
+    padding: 1em;
+}
+
 #page {
     margin-top: 10px;
+    padding: 2em;
     background-color: white;
     border: solid gray 1px;
 }
@@ -397,6 +413,7 @@ a.wallich-specimens-switch:active {
 .wallich_pop_trigger {
     position: relative;
     margin-right: 1em;
+    cursor: pointer;
 }
 
 .wallich_pop_trigger:after {
@@ -421,20 +438,6 @@ a.wallich-specimens-switch:active {
     margin-left: -0em;
 }
 
-.wallich_pop_box {
-    position: absolute;
-    top: -5em;
-    left: 1em;
-    display: none;
-    border: solid gray 1px;
-    padding: 0.3em;
-    width: 20em;
-    height: 4em;
-    background-color: rgba(255, 255, 255, 0.9);
-    text-align: left;
-    z-index: 500;
-    overflow: auto;
-}
 
 .wallich_pop_box p {
     margin-top: 0px;

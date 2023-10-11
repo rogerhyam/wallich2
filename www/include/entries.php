@@ -198,9 +198,9 @@
                         foreach ($locations as $location) {
                             if(!$first) echo ' - ';
                             $first = false;
-                            echo '<span class="wallich_pop_trigger" onmouseenter="popUpDescription(this)">';
+                            echo '<span class="wallich_pop_trigger" onclick="popUpDescription(this)">';
                             echo $location['name'];
-                            echo '<div onmouseleave="popDownDescription(this)" onclick="popDownDescription(this)" class="wallich_pop_box" style="height:8em; top: -5em;"><p><strong>Location: </strong>';
+                            echo '<div style="display:none;"><p><strong>Location: </strong>';
                             echo $location['description'];
                             echo '</div>';
                             echo '</span>';
@@ -225,9 +225,9 @@
                             if(!$first) echo ' - ';
                             $first = false;
                             
-                            echo '<span class="wallich_pop_trigger" onmouseenter="popUpDescription(this)">';
+                            echo '<span class="wallich_pop_trigger" onclick="popUpDescription(this)">';
                             echo $collector['name'];
-                            echo '<div onmouseleave="popDownDescription(this)" onclick="popDownDescription(this)" class="wallich_pop_box" style="height:10em; top: -3em;"><p><strong>Collector: </strong>';
+                            echo '<div style="display:none;"><p><strong>Collector: </strong>';
                             echo $collector['description'];
                             echo '</div>';
                             echo '</span>';
