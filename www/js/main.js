@@ -1,4 +1,4 @@
-
+const graphQlUri = "https://list.worldfloraonline.org/gql.php";
 
 function popUpDescription(triggerDiv) {
 
@@ -18,7 +18,18 @@ function popUpDescription(triggerDiv) {
     place.appendChild(content);
 
     // turn it on
-    document.getElementById('overlay').style.display = "block";
+    overlay = document.getElementById('overlay');
+    overlay.style.display = "block";
+    overlay.style.top = (document.documentElement.scrollTop + 200) + 'px';
+
+    console.log(place.style.top);
+
+    // scroll it down if we need to
+
+
+    // console.log(document.getElementById('overlay').style.top);
+    // document.getElementById('overlay').style.top = document.getElementById('overlay').style.top + document.documentElement.scrollTop + 'px';
+    //  console.log(document.getElementById('overlay').style.top);
 
 }
 
@@ -36,4 +47,25 @@ function popDownDescription() {
     }
 
 
+}
+
+function runGraphQuery(query, variables, giveBack) {
+
+    const payload = {
+        'query': query,
+        'variables': variables
+    }
+
+    var options = {
+        'method': 'POST',
+        'contentType': 'application/json',
+        'headers': {},
+        'body': JSON.stringify(payload)
+    };
+
+    const response = fetch(graphQlUri, options)
+        .then((response) => response.json())
+        .then((data) => giveBack(data));
+
+    return;
 }

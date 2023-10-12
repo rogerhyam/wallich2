@@ -53,9 +53,9 @@
         <div id="main">
             <div id="content" style="position:relative; width: 100%" role="main">
                 <div id="overlay" style="display:none;">
-                    <div id="overlay_box">
-                        <p style="float: right; margin-top: -.8em; "><span
-                                style="text-decoration: none; font-weight: bold; cursor: pointer;" href="#"
+                    <div id="overlay_box" style="background-color: white; z-index: 2;">
+                        <p style=" float: right; margin-top: -.8em; "><span
+                                style=" text-decoration: none; font-weight: bold; cursor: pointer;" href="#"
                                 onclick="popDownDescription(this)">X</span></p>
                         <div id="overlay_content">Place holder</div>
                         <p style="float: right; margin-top: -.8em;"><span

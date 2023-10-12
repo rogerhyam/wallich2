@@ -17,15 +17,6 @@
         <div class="field-items">
             <div class="field-item even" property="content:encoded">
 
-                <p style="border: solid 2px orange; padding: 1em; clear: both;">
-                    We are making some changes as we move the <em>Wallich Catalogue Online</em> to a new hosting
-                    platform.
-                    All the data is still here but it will take us a few more days to stitch it back together like
-                    before.
-                    Please carry on using the catalogue as usual.
-                    Work should be finished by the end of October 2023 after which we will look at adding integration
-                    with other databases.
-                </p>
                 <p>
                 <div class="media media-element-container media-default media-float-right">
                     <div id="file-26068" class="file file-image file-image-jpeg">

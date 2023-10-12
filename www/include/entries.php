@@ -1,5 +1,7 @@
 <?php
 
+    require_once('include/iso_countries.php');
+
     // we need to load the entry even if we have been passed a subentry 
     if(@$_GET['sub_entry'] == 'true'){
         $safe_nid = $mysqli->real_escape_string($_GET['id']);
@@ -128,11 +130,19 @@
                 <span><?php echo $entry['author_name'] ?></span>
             </div>
 
+            <?php if($entry['ipni_id']) {?>
+
             <div class="wallich-entity-field">
                 <strong class="wallich-entity-field-title">IPNI:</strong>
                 <a href="https://www.ipni.org/n/<?php echo $entry['ipni_id'] ?>"
                     target="ipni"><?php echo $entry['ipni_id'] ?></a>
             </div>
+
+            <?php } // end ipni check ?>
+
+            <?php 
+                render_wfo_link($entry['wfo_id']);
+            ?>
 
             <div class="wallich-entity-field">
                 <strong class="wallich-entity-field-title">Notes:</strong>
@@ -180,6 +190,7 @@
                 </div>
                 <div class="wallich-verbatim"><?php echo $sub_entry['verbatim'] ?></div>
                 <?php
+
                     // fetch the location
                     if(count($sub_entry['location_tid']) > 0 ){
                         $sql = "SELECT * FROM gazetteer WHERE tid in (". implode(',' , $sub_entry['location_tid'])  .");";
@@ -200,8 +211,13 @@
                             $first = false;
                             echo '<span class="wallich_pop_trigger" onclick="popUpDescription(this)">';
                             echo $location['name'];
-                            echo '<div style="display:none;"><p><strong>Location: </strong>';
-                            echo $location['description'];
+                            echo '<div style="display:none;"><p><h3>Location</h3>';
+                            echo "<p><strong>Name: </strong>{$location['name']}</p>";
+                            if($location['standard_name']) echo "<p><strong>Standard Name: </strong>{$location['standard_name']}</p>";
+                            if($location['modern_name']) echo "<p><strong>Modern Name: </strong>{$location['modern_name']}</p>";
+                            $iso = $location['country_iso'];
+                            if($location['country_iso'] && isset($iso_countries[$iso]) ) echo "<p><strong>Country: </strong>{$iso_countries[$iso]} ({$location['country_iso']})</p>";
+                            echo "<p><h3>Note</h3>{$location['description']}</p>";
                             echo '</div>';
                             echo '</span>';
                         }
@@ -227,14 +243,17 @@
                             
                             echo '<span class="wallich_pop_trigger" onclick="popUpDescription(this)">';
                             echo $collector['name'];
-                            echo '<div style="display:none;"><p><strong>Collector: </strong>';
-                            echo $collector['description'];
+                            echo '<div style="display:none;"><p><h3>Collector</h3>';
+                            echo "<p><strong>Name: </strong>{$collector['name']}</p>";
+                            if($collector['standard_name']) echo "<p><strong>Standard Name: </strong>{$collector['standard_name']}</p>";
+                            echo "<p><h3>Note</h3>{$collector['description']}</p>";
                             echo '</div>';
                             echo '</span>';
                         }
                         echo '</div>';
 
                     } // collector check
+
                 ?>
 
                 <?php if($sub_entry['year']){ ?>
@@ -242,7 +261,9 @@
                     <strong class="wallich-entity-field-title">Year:</strong>
                     <span><?php echo $sub_entry['year']?></span>
                 </div>
-                <?php } // end year check ?>
+                <?php } // end year check 
+                    render_wfo_link($sub_entry['wfo_id']);
+                ?>
             </div>
 
             <?php render_specimens($sub_entry['drupal_nid']); ?>
@@ -309,6 +330,59 @@ function render_specimens($entity_id){
     </table>
 
 </div>
+<?php
+}
+
+
+function render_wfo_link($wfo_id){
+    if(!$wfo_id) return '';
+    $element_id = "banana_" . rand();
+?>
+<script>
+query =
+    `query{
+        taxonNameById(nameId: "<?php echo $wfo_id ?>"){
+            id
+            fullNameStringHtml,
+            currentPreferredUsage{
+                hasName{
+                    id,
+                    fullNameStringHtml
+                }
+            }
+        }
+    }`;
+
+// here we call our utility function and pass it
+// we flesh out the call back function to do more with the JSON
+runGraphQuery(query, {}, (response) => {
+
+        let target = document.getElementById("<?php echo  $element_id ?>")
+        let name = response.data.taxonNameById;
+
+        if (name.currentPreferredUsage) {
+            if (name.currentPreferredUsage.hasName.id == name.id) {
+                target.innerHTML = `${name.fullNameStringHtml}`;
+            } else {
+                let accepted_name = name.currentPreferredUsage.hasName;
+                target.innerHTML =
+                    `as ${accepted_name.fullNameStringHtml}&nbsp;[<strong>syn: </strong>${name.fullNameStringHtml}]`;
+            }
+        } else {
+            target.innerHTML = name.fullNameStringHtml + " [Unplaced]";
+        }
+
+    }
+
+);
+</script>
+
+<div class="wallich-entity-field">
+    <strong class="wallich-entity-field-title">WFO ID:</strong>
+    <a target="wfo" href="https://list.worldfloraonline.org/<?php echo $wfo_id ?>"><?php echo $wfo_id ?></a>&nbsp;
+    <span class="output" id="<?php echo $element_id ?>">Loading ...</span>
+</div>
+
 <?php
 }
 ?>
