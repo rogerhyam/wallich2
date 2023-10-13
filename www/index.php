@@ -109,7 +109,7 @@
                         <li class="menu-314"><a href="/index.php?section=search"
                                 title="Search the entries and sub-entries">Search</a>
                         </li>
-                        <li class="menu-646 last"><a href="index.php?section=feedback"
+                        <li class="menu-646 last"><a href="index.php?section=feedback&guess=clear"
                                 title="Feedback on the website and data">Feedback</a></li>
                     </ul>
                 </nav>

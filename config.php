@@ -14,3 +14,5 @@ if ($mysqli->connect_error) {
 if (!$mysqli->set_charset("utf8mb4")) {
   echo printf("Error loading character set utf8: %s\n", $mysqli->error);
 }
+
+session_start(); // needed for the capture.
